@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+		<head>
+				<title>FoodForMe</title>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+				<script src="javascripts/App.js"></script>
+		</head>
+		<body ng-app="foodApp">
+				<div id="main" ng-controller="mainController">
+						<form ng-Submit="search()">
+								<input required_type="text" placeholder="Search for food." maxlength=50 />
+								<input class="button" type="submit" value="search"/>
+						</form>
+						<div id="feed">
+								<h3>Results</h3>
+								<div class="result" ng-repeat result in results | orderBy: distance ng-class-odd="'odd'" ng-class-even="'even'">
+										<p>{{result.location_name}}</p>
+										<p>{{result.location_name}} is {{result.distance}} miles away.</p>
+								</div>
+				</div>
+		</body>
+</html>
