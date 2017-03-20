@@ -35,7 +35,7 @@ app.post('/', function(req, res) {
 		"port": null,
 		"path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
 		"headers": {
-			"x-access-token": "563aa311f08441be",
+			"x-access-token": "super secret code",
 			"cache-control": "no-cache",
 		 	"postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
 		}
@@ -60,8 +60,6 @@ app.post('/', function(req, res) {
 });
 //app.use('/auth', authenticate);
 app.use('/', index);
-
-
 
 
 // catch 404 and forward to error handler
