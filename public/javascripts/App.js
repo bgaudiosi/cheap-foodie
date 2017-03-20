@@ -2,19 +2,24 @@
 
 var app = angular.module("foodApp", []);
 
-app.controller("mainController", function($scope) {
+app.controller("mainController", function($scope, $http) {
 	
 	
 	$scope.results = [];
 	$scope.newResult = {location_name: "", text: "", distance: ""};
 	$scope.searchTerm = '';
+	$scope.loc = "";
 	$scope.search = function() {
-
-		console.log($scope.searchTerm);
-	}
-
+		$scope.data = {search: $scope.searchTerm, loc: $scope.loc}
+		$http.post('http://localhost:4000/', $scope.data).success(function(data) {
+			console.log(data);
+		}).error(function(data) {
+			console.log("no bueno");
+		});
+	};
+	$scope.heya = "hola";
 	$scope.result = function() {
-		$scope.posts.push($scope.newResult);
+		$scope.results.push($scope.newResult);
 		$scope.newResult = {location_name:"", text: "", distance: ""};
 	};
 });

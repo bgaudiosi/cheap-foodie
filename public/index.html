@@ -9,11 +9,13 @@
 		<body ng-app="foodApp">
 				<div id="main" ng-controller="mainController">
 						<form ng-submit="search()">
+								<input ng-model="loc" required_type="text" placeholder="zipcode" maxlength=5 />
 								<input ng-model="searchTerm" required_type="text" placeholder="Search for food" maxlength=50 />
 								<input class="button" type="submit" value="search"/>
 						</form>
 						<div id="feed">
 								<h3>Results</h3>
+								{{ heya }}
 								<!--
 								<div class="result" ng-repeat result in results | orderBy: distance ng-class-odd="'odd'" ng-class-even="'even'">
 										<p>{{result.location_name}}</p>
