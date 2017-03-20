@@ -1,6 +1,6 @@
 //App.js
 
-var app = angular.module("App", []);
+var app = angular.module("foodApp", []);
 
 app.controller("mainController", function($scope) {
 	
@@ -8,8 +8,8 @@ app.controller("mainController", function($scope) {
 	$scope.results = [];
 	$scope.newResult = {location_name: "", text: "", distance: ""};
 	
-	$scope.search = function() [
-		/* do sth */
+	$scope.search = function() {
+		console.log("great success?");
 	}
 
 	$scope.result = function() {

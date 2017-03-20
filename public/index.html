@@ -2,7 +2,8 @@
 <html>
 		<head>
 				<title>FoodForMe</title>
-				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+				<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
 				<script src="javascripts/App.js"></script>
 		</head>
 		<body ng-app="foodApp">
@@ -13,10 +14,12 @@
 						</form>
 						<div id="feed">
 								<h3>Results</h3>
+								<!--
 								<div class="result" ng-repeat result in results | orderBy: distance ng-class-odd="'odd'" ng-class-even="'even'">
 										<p>{{result.location_name}}</p>
 										<p>{{result.location_name}} is {{result.distance}} miles away.</p>
-								</div>
+								</div>-->
+						</div>
 				</div>
 		</body>
 </html>
