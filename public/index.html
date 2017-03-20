@@ -8,8 +8,8 @@
 		</head>
 		<body ng-app="foodApp">
 				<div id="main" ng-controller="mainController">
-						<form ng-Submit="search()">
-								<input required_type="text" placeholder="Search for food." maxlength=50 />
+						<form ng-submit="search()">
+								<input ng-model="searchTerm" required_type="text" placeholder="Search for food" maxlength=50 />
 								<input class="button" type="submit" value="search"/>
 						</form>
 						<div id="feed">

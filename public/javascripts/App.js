@@ -7,14 +7,15 @@ app.controller("mainController", function($scope) {
 	
 	$scope.results = [];
 	$scope.newResult = {location_name: "", text: "", distance: ""};
-	
+	$scope.searchTerm = '';
 	$scope.search = function() {
-		console.log("great success?");
+
+		console.log($scope.searchTerm);
 	}
 
 	$scope.result = function() {
 		$scope.posts.push($scope.newResult);
-		$scope.newPost = {location_name:"", text: "", distance: ""};
+		$scope.newResult = {location_name:"", text: "", distance: ""};
 	};
 });
 
