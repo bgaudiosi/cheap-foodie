@@ -6,22 +6,29 @@ app.controller("mainController", function($scope, $http) {
 	
 	
 	$scope.results = [];
-	$scope.newResult = {location_name: "", text: "", distance: ""};
+	$scope.newResult = {location_name: "", number: "", logo: "", address: "", url: ""};
 	$scope.searchTerm = '';
 	$scope.loc = "";
 	$scope.search = function() {
 		$scope.data = {search: $scope.searchTerm, loc: $scope.loc}
 		$http.post('http://localhost:4000/', $scope.data).success(function(data) {
-			console.log(data);
+			restaurants = data.restaurants;
+			for (var i = 0; i < restaurants.length; i++) {
+				var curr = $scope.eatStreetResult(restaurants[i]);
+			}
+			console.log($scope.results);
 		}).error(function(data) {
-			console.log("no bueno");
+			console.log("Error: Bad call to server");
 		});
+	
 	};
-	$scope.heya = "hola";
-	$scope.result = function() {
-		$scope.results.push($scope.newResult);
-		$scope.newResult = {location_name:"", text: "", distance: ""};
+
+	$scope.eatStreetResult = function( restaurant ) {
+		$scope.results.push($scope.thisRestaurant);
+		$scope.thisRestaurant = {location_name: restaurant.name, number: restaurant.phone, logo: restaurant.logoUrl, address: restaurant.streetAddress + ", " + restaurant.city + ", " + restaurant.state + ".", url: restaurant.url};
 	};
+
+
 });
 
 app.controller("authController", function($scope) {
