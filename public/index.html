@@ -15,12 +15,12 @@
 						</form>
 						<div id="feed">
 								<h3>Results</h3>
-								{{ heya }}
-								<!--
-								<div class="result" ng-repeat result in results | orderBy: distance ng-class-odd="'odd'" ng-class-even="'even'">
-										<p>{{result.location_name}}</p>
-										<p>{{result.location_name}} is {{result.distance}} miles away.</p>
-								</div>-->
+								<div class="result">
+										
+									<ul class="list-group">
+											<li class="list-group-item" ng-repeat="place in results">{{place.location_name}}</li>
+									</ul>	
+								</div>
 						</div>
 				</div>
 		</body>
