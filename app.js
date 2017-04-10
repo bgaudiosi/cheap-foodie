@@ -26,24 +26,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Post method for searches
 app.post('/', function(req, res) {
+	var search_val = req.body.search;
+	var location_val = req.body.loc;
 	
 	var http = require("https");
-	
 	var options = {
 		"method": "GET",
 		"hostname": "api.eatstreet.com",
 		"port": null,
 		"path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
 		"headers": {
-			"x-access-token": "secret",
+			"x-access-token": "563aa311f08441be",
 			"cache-control": "no-cache",
 		 	"postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
 		}
 	}
-	
-	options.path = options.path.replace("ADDRESS", req.body.loc);
-	
-	options.path = options.path.replace("SEARCH_VAL", req.body.search);
+	options.path = options.path.replace("ADDRESS", location_val);
+	options.path = options.path.replace("SEARCH_VAL", search_val);
 	
 	var api_req = http.request(options, function (api_res) {
 		var chunks = [];
