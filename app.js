@@ -72,59 +72,75 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // Post method for searches
 app.post('/', function(req, res) {
     var search_val = req.body.search;
     var location_val = req.body.loc;
-    console.log("HIIIII");
-	var inDB = Restaurant.find({"foodTypes": search_val, "zip": location_val})
-	console.log(inDB);
-	/*
-	if (inDB.length > 0) {
-		console.log("things found in DB");
-		return;
-	}
-	*/
-    var http = require("https");
-    var options = {
-         "method": "GET",
-         "hostname": "api.eatstreet.com",
-         "port": null,
-         "path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
-         "headers": {
-            "x-access-token": "563aa311f08441be",
-            "cache-control": "no-cache",
-            "postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
-         }
-    }
-    options.path = options.path.replace("ADDRESS", location_val);
-    options.path = options.path.replace("SEARCH_VAL", search_val);
+    console.log("search val = " + search_val);
+	console.log("location val = " + location_val);
+	/* Query the database */
+	var rests = Restaurant.find({ 'foodTypes': search_val, "zip": location_val }, function (err, restaurants) {
+		  if (err) return handleError(err);
+	})
+	/* Mongoose find is asynchronous so all the code is surrounded in this block */
+	rests.lean().exec(function(err,restaurants){
+		if(err)
+			return console.log(err);
+		/* If there are results in the DB, send those to the user */
+		if (restaurants.length > 0) {
+
+			console.log("things found in DB");
+			res.send(restaurants);
+			console.log("send success");
+			res.end();
+			console.log("end success");
+			return;
+		
+		/* Otherwise, do our API call */
+		} else {
+			var http = require("https");
+    		var options = {
+    	 		"method": "GET",
+     		    "hostname": "api.eatstreet.com",
+     		    "port": null,
+		        "path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
+  		        "headers": {
+    			    "x-access-token": "563aa311f08441be",
+ 		        	"cache-control": "no-cache",
+    		        "postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
+         		}
+    		}
+		    options.path = options.path.replace("ADDRESS", location_val);
+		    options.path = options.path.replace("SEARCH_VAL", search_val);
          
-    var api_req = http.request(options, function (api_res) {
-    var chunks = [];
-    api_res.on("data", function (chunk) {
-        chunks.push(chunk);
-    });
-                               
-    api_res.on("end", function () {
-        var body = Buffer.concat(chunks);
-        var data = JSON.parse(body.toString());
-        var restaurants = data.restaurants;
-        res.send(restaurants);
-        for (var i = 0; i < restaurants.length; i++) {
-            var curr_restaurant = new Restaurant(restaurants[i])
-            curr_restaurant.save(function (err, curr_restaurant) {
-                if (err) {
-                    console.log("Error saving to DB");
-                    return console.error(err);
-                }
-                //console.log("Saving " + restaurants[i].name + " to DB.");
-            });
-        }
-        res.end();
-    	});
+		    var api_req = http.request(options, function (api_res) {
+		    	var chunks = [];
+		    	api_res.on("data", function (chunk) {
+	        		chunks.push(chunk);
+		    	});
+    			api_res.on("end", function () {
+	        		var body = Buffer.concat(chunks);
+	        		var data = JSON.parse(body.toString());
+		        	var restaurants = data.restaurants;
+		        	res.send(restaurants);
+		        	for (var i = 0; i < restaurants.length; i++) {
+						var curr_restaurant = new Restaurant(restaurants[i])
+        	    		curr_restaurant.save(function (err, curr_restaurant) {
+                			if (err) {
+                		   		console.log("Error saving to DB");
+                		    	return console.error(err);
+                			}
+                			//console.log("Saving " + restaurants[i].name + " to DB.");
+            			});
+					}
+        			res.end();
+    			});
+			});
+    		api_req.end();
+		}		
 	});
-    api_req.end();
+	//});
 });
 //app.use('/auth', authenticate);
 app.use('/', index);
