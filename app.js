@@ -16,40 +16,40 @@ db.once('open', function() {
         });
 
 var restaurant_schema =  new Schema({
-                                    "apiKey": String,
-                                    "deliveryMin": Number,
-                                    "logoUrl": String,
-                                    "name": String,
-                                    "streetAddress": String,
-                                    "city": String,
-                                    "state": String,
-                                    "zip": String,
-                                    "foodTypes": Array,
-                                    "phone": String,
-                                    "latitude": Number,
-                                    "longitude": Number,
-                                    "minFreeDelivery": Number,
-                                    "taxRate": Number,
-                                    "acceptsCash": Boolean,
-                                    "acceptsCard": Boolean,
-                                    "offersPickup": Boolean,
-                                    "offersDelivery": Boolean,
-                                    "isTestRestaurant": Boolean,
-                                    "minWaitTime": Number,
-                                    "maxWaitTime": Number,
-                                    "open": Boolean,
-                                    "url": String,
-                                    "hours": {
-                                    "Sunday": Array,
-                                    "Monday": Array,
-                                    "Tuesday": Array,
-                                    "Wednesday": Array,
-                                    "Thursday": Array,
-                                    "Friday": Array,
-                                    "Saturday": Array
-                                    },
-                                    "timezone": String
-                                    });
+    "apiKey": String,
+	"deliveryMin": Number,
+    "logoUrl": String,
+    "name": String,
+    "streetAddress": String,
+    "city": String,
+    "state": String,
+    "zip": String,
+    "foodTypes": Array,
+    "phone": String,
+    "latitude": Number,
+    "longitude": Number,
+    "minFreeDelivery": Number,
+    "taxRate": Number,
+    "acceptsCash": Boolean,
+    "acceptsCard": Boolean,
+    "offersPickup": Boolean,
+    "offersDelivery": Boolean,
+    "isTestRestaurant": Boolean,
+    "minWaitTime": Number,
+    "maxWaitTime": Number,
+    "open": Boolean,
+    "url": String,
+    "hours": {
+        "Sunday": Array,
+        "Monday": Array,
+        "Tuesday": Array,
+        "Wednesday": Array,
+        "Thursday": Array,
+        "Friday": Array,
+        "Saturday": Array
+    },
+    "timezone": String
+});
 
 var Restaurant = mongoose.model('Restaurant', restaurant_schema);
 var mongo = require('mongodb');
@@ -74,49 +74,58 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Post method for searches
 app.post('/', function(req, res) {
-         var search_val = req.body.search;
-         var location_val = req.body.loc;
-         
-         var http = require("https");
-         var options = {
+    var search_val = req.body.search;
+    var location_val = req.body.loc;
+    console.log("HIIIII");
+	var inDB = Restaurant.find({"foodTypes": search_val, "zip": location_val})
+	console.log(inDB);
+	/*
+	if (inDB.length > 0) {
+		console.log("things found in DB");
+		return;
+	}
+	*/
+    var http = require("https");
+    var options = {
          "method": "GET",
          "hostname": "api.eatstreet.com",
          "port": null,
          "path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
          "headers": {
-         "x-access-token": "563aa311f08441be",
-         "cache-control": "no-cache",
-         "postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
+            "x-access-token": "563aa311f08441be",
+            "cache-control": "no-cache",
+            "postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
          }
-         }
-         options.path = options.path.replace("ADDRESS", location_val);
-         options.path = options.path.replace("SEARCH_VAL", search_val);
+    }
+    options.path = options.path.replace("ADDRESS", location_val);
+    options.path = options.path.replace("SEARCH_VAL", search_val);
          
-         var api_req = http.request(options, function (api_res) {
-                                    var chunks = [];
-                                    api_res.on("data", function (chunk) {
-                                               chunks.push(chunk);
-                                               });
-                                    api_res.on("end", function () {
-                                               var body = Buffer.concat(chunks);
-                                               var data = JSON.parse(body.toString());
-                                               var restaurants = data.restaurants;
-                                               res.send(data);
-                                               for (var i = 0; i < restaurants.length; i++) {
-                                               var curr_restaurant = new Restaurant(restaurants[i])
-                                               curr_restaurant.save(function (err, curr_restaurant) {
-                                                                    if (err) {
-                                                                    console.log("Error saving to DB");
-                                                                    return console.error(err);
-                                                                    }
-                                                                    //console.log("Saving " + restaurants[i].name + " to DB.");
-                                                                    });
-                                               }
-                                               res.end();
-                                               });
-                                    });
-         api_req.end();
-         });
+    var api_req = http.request(options, function (api_res) {
+    var chunks = [];
+    api_res.on("data", function (chunk) {
+        chunks.push(chunk);
+    });
+                               
+    api_res.on("end", function () {
+        var body = Buffer.concat(chunks);
+        var data = JSON.parse(body.toString());
+        var restaurants = data.restaurants;
+        res.send(restaurants);
+        for (var i = 0; i < restaurants.length; i++) {
+            var curr_restaurant = new Restaurant(restaurants[i])
+            curr_restaurant.save(function (err, curr_restaurant) {
+                if (err) {
+                    console.log("Error saving to DB");
+                    return console.error(err);
+                }
+                //console.log("Saving " + restaurants[i].name + " to DB.");
+            });
+        }
+        res.end();
+    	});
+	});
+    api_req.end();
+});
 //app.use('/auth', authenticate);
 app.use('/', index);
 
