@@ -12,7 +12,7 @@ app.controller("mainController", function($scope, $http) {
 	$scope.search = function() {
         $scope.results = [];
 		$scope.data = {search: $scope.searchTerm, loc: $scope.loc}
-		$http.post('http://localhost:4000/', $scope.data).success(function(data) {
+		$http.post('http://localhost:3000/', $scope.data).success(function(data) {
 			restaurants = data;
 			for (var i = 0; i < restaurants.length; i++) {
 				var curr = $scope.eatStreetResult(restaurants[i]);

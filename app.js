@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var config = require("./config.js");
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 mongoose.connect('mongodb://localhost:27017/foodforme')
@@ -106,7 +108,7 @@ app.post('/', function(req, res) {
      		    "port": null,
 		        "path": "/publicapi/v1/restaurant/search?street-address=ADDRESS&search=SEARCH_VAL",
   		        "headers": {
-    			    "x-access-token": "563aa311f08441be",
+    			    "x-access-token": config.eatstreet,
  		        	"cache-control": "no-cache",
     		        "postman-token": "7e22b582-35fe-164b-d5f7-10c1860cd158"
          		}
