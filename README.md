@@ -1,6 +1,6 @@
 # cheap-foodie
 An app to help find cheap meals nearby
 
-To run on Unix/OSX: PORT=4000 npm start
+To run on Unix/OSX: npm start
 
-Then, go to localhost:4000
+Then, go to localhost:3000
