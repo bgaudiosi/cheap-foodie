@@ -1,5 +1,7 @@
 var config = {};
 
-config.eatstreet = "INSERT API KEY HERE";
+config.eatstreet = "SECRET";
+config.twitter_consumer = "SECRET";
+config.twitter_secret = "SECRET";
 
 module.exports = config;
