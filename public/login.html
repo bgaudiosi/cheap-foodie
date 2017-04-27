@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-
+<!--DOCTYPE html-->
 <html ng-app="foodApp">
 	<head>
 		<meta charset="utf-8" />
@@ -10,11 +9,9 @@
 		<script src="javascripts/App.js"></script>
 	</head>
 	<body>
-		<div ng-view></div>
-		<div class="credits text-center">
-			<p>Created by Ben Gaudiosi, Boman Yang, Davy Huang</p>
-		</div>
-
-	
+		<p>Please authenticate yourself with Twitter before using FoodForMe</p>
+		<form ng-submit="auth()">
+			<input class="button" type="submit" value="Login"/>
+		</form>	
 	</body>
 </html>

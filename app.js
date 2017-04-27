@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var config = require("./config.js");
+var passport = require("passport");
+var Strategy = require('passport-twitter').Strategy;
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -58,7 +60,7 @@ var mongo = require('mongodb');
 
 var index = require('./routes/index');
 //We will uncomment this after implementing authenticate
-////var authenticate = require('./routes/authenticate');
+////var authenticate = require('./routes/auth');
 var app = express();
 var router = express.Router();
 
@@ -67,7 +69,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -75,9 +77,34 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+/* Authentication methods */
+
+passport.use(new Strategy({
+	consumerKey: config.twitter_consumer,
+	consumerSecret: config.twitter_secret,
+	callbackURL: "http://localhost:3000/auth/twitter/callback"
+	},
+	function(token, tokenSecret, profile, cb) {
+		User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+			return cb(err, user);
+		});
+	}
+));
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', 
+	passport.authenticate('twitter', { failureRedirect: '/login' }), 
+	function(req, res) {
+	//Successful authentication, redirect home.
+		res.redirect('/');
+});
+
+
 // Post method for searches
-app.post('/', function(req, res) {
-    var search_val = req.body.search;
+app.post('/search', function(req, res) {
+    console.log(req);
+	var search_val = req.body.search;
     var location_val = req.body.loc;
     console.log("search val = " + search_val);
 	console.log("location val = " + location_val);
