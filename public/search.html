@@ -2,20 +2,43 @@
 <html>
 	<head>
 		<title>FoodForMe</title>
+        <link rel="stylesheet" href="Style_1.css">
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 			<script src="javascripts/App.js"></script>
 	</head>
 	<body ng-app="foodApp">
-		<div id="main" ng-controller="searchController">
+        <div class="nav">
+            <ul class="nav_bar">
+                <li class="left"><a href="search.html">Home</a></li>
+                
+                <li class="right"><a href="login.html">Sign in</a></li>
+                
+
+            </ul>
+        </div>
+        
+        <div class="banner">
+            <!-- picture from free stock photo site: pexels.com -->
+
+            <div class="banner_text">
+                <h1 class="title">Food for Me</h1>
+            </div>
+        </div>
+    
+        
+        <div class="info">
+            <div id="main" ng-controller="searchController">
 			<form ng-submit="search()">
-				<input ng-model="loc" required_type="text" placeholder="zipcode" maxlength=5 />
-				<input ng-model="searchTerm" required_type="text" placeholder="Search for food" maxlength=50 />
-				<input class="button" type="submit" value="search"/>
+                <center>
+                    <input ng-model="loc" required_type="text" placeholder="zipcode" maxlength=5 />
+                    <input ng-model="searchTerm" required_type="text" placeholder="Search for food" maxlength=50 />
+                    <input class="button" type="submit" value="search"/>
+                </center>
 			</form>
 			<div id="feed">
-				<h3>Results</h3>
+				<h3>Results:</h3>
 				<div class="result">
 					<table>
 						<tr class="list-group-item" ng-repeat="place in results">
@@ -28,5 +51,6 @@
 				</div>
 			</div>
 		</div>
-	</body>
+        </div>
+    </body>
 </html>
