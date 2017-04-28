@@ -59,8 +59,31 @@ var Restaurant = mongoose.model('Restaurant', restaurant_schema);
 var mongo = require('mongodb');
 
 var index = require('./routes/index');
-//We will uncomment this after implementing authenticate
-////var authenticate = require('./routes/auth');
+
+/* needed for auth */
+passport.use(new Strategy({
+	consumerKey: config.twitter_consumer,
+	consumerSecret: config.twitter_secret,
+	callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+	},
+	function(token, tokenSecret, profile, cb) {
+		return cb(null, profile);
+		/*User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+			return cb(err, user);
+		});
+		*/
+	}
+));
+
+passport.serializeUser(function(user, cb) {
+	  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+	  cb(null, obj);
+});
+
+
 var app = express();
 var router = express.Router();
 
@@ -72,29 +95,24 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(require('morgan')('combined'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 
 /* Authentication methods */
 
-passport.use(new Strategy({
-	consumerKey: config.twitter_consumer,
-	consumerSecret: config.twitter_secret,
-	callbackURL: "http://localhost:3000/auth/twitter/callback"
-	},
-	function(token, tokenSecret, profile, cb) {
-		User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-			return cb(err, user);
-		});
-	}
-));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', 
-	passport.authenticate('twitter', { failureRedirect: '/login' }), 
+	passport.authenticate('twitter', { failureRedirect: '#/login' }), 
 	function(req, res) {
 	//Successful authentication, redirect home.
 		res.redirect('/');
@@ -103,7 +121,6 @@ app.get('/auth/twitter/callback',
 
 // Post method for searches
 app.post('/search', function(req, res) {
-    console.log(req);
 	var search_val = req.body.search;
     var location_val = req.body.loc;
     console.log("search val = " + search_val);
@@ -169,9 +186,7 @@ app.post('/search', function(req, res) {
     		api_req.end();
 		}		
 	});
-	//});
 });
-//app.use('/auth', authenticate);
 app.use('/', index);
 
 

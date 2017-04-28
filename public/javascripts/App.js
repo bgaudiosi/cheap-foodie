@@ -78,7 +78,16 @@ app.controller("searchController", function($scope, $http, $location) {
 });
 
 app.controller("loginController", function($scope, $http, $location) {
+	
 	$scope.auth = function() {
-		console.log("not yet implemented");
+		/*$location.path("/auth/twitter");
+		$http.get('/auth/twitter')
+			.then(function success(data) {
+				console.log($scope.results);
+			}, function failure(data) {
+				console.log(data);
+				console.log("Error: Bad call to server");
+			}); */
 	}
+	
 });
