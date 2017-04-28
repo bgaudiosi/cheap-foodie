@@ -4,17 +4,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>FoodForMe</title>
+		<link rel="stylesheet" href="Style_1.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 		<script src="javascripts/App.js"></script>
 	</head>
 	<body>
-		<div ng-view></div>
-		<div class="credits text-center">
-			<p>Created by Ben Gaudiosi, Boman Yang, Davy Huang</p>
-		</div>
+		<div class="nav">
+			<ul class="nav_bar">
+				<li class="left"><a href="#/search">Home</a></li>
+				<li class="right"><a href="#/login">Sign in</a></li>
 
-	
+			</ul>
+		</div>
+		<div ng-view></div>
 	</body>
 </html>
