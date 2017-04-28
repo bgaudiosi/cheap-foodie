@@ -17,7 +17,11 @@ var app = angular
 				templateUrl: 'login.html',
 			})
 			
-		
+			.when('/profile', {
+				controller: 'profileController',
+				templateUrl: 'profile.html',
+			})
+			
 			.otherwise({ redirectTo: '/' });
 	}])
 	.run(['$rootScope', '$location', '$cookieStore', '$http',
@@ -29,11 +33,14 @@ var app = angular
 			}
 			$rootScope.$on('$locationChangeStart', function (event, next, current) {
 				// redirect to login page if not logged in and trying to access a restricted page
-				//var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-				//var loggedIn = $rootScope.globals.currentUser;
-				//if (restrictedPage && !loggedIn) {
-				//	$location.path('/login');
-				//}
+				console.log("changing page");
+				/*
+				var restrictedPage = ['/login'].indexOf($location.path()) === -1;
+				var loggedIn = $rootScope.globals.currentUser;
+				if (restrictedPage && !loggedIn) {
+					console.log("in restricted page");
+					$location.path('/login');
+				}*/
 			});
 		}]);
 
@@ -77,17 +84,21 @@ app.controller("searchController", function($scope, $http, $location) {
 
 });
 
-app.controller("loginController", function($scope, $http, $location) {
+app.controller("loginController", function($scope, $http, $cookieStore, $location) {
 	
+	/* Not yet implemented */
 	$scope.auth = function() {
-		/*$location.path("/auth/twitter");
-		$http.get('/auth/twitter')
-			.then(function success(data) {
-				console.log($scope.results);
-			}, function failure(data) {
-				console.log(data);
-				console.log("Error: Bad call to server");
-			}); */
-	}
+					  
+		$rootScope.globals = {
+			currentUser: {
+			username: username,
+			authdata: authdata
+			}
+		};
+								  
+		$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+		$cookieStore.put('globals', $rootScope.globals);
+	};
+}
 	
-});
+);
