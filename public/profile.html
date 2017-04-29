@@ -4,23 +4,30 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>FoodForMe</title>
+        <link rel="stylesheet" href="Style_1.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 		<script src="javascripts/App.js"></script>
 	</head>
 	<body>
-		<div class="nav">
-			<ul class="nav_bar">
-				<li class="left"><a href="#/search">Home</a></li>
-				<li class="left"><a href="#/profile">Profile</a></li>
-				<li class="right"><a href="/logout">Sign out</a></li> <!-- no # here b/c it's a direct http get -->
-			</ul>
-		</div>
-		<br/>
-		<br/>
-		<img src={{profilePic}} width="300px" height="300px" />
-		<p>{{name}}</p>
-		<p>{{loc}}</p>
+        <div class="info" style="top:100px;" >
+            <center>
+                <div class="nav">
+                    <ul class="nav_bar">
+                        <li class="left"><a href="#/search">Home</a></li>
+                        <li class="left"><a href="#/profile">Profile</a></li>
+                        <li class="right"><a href="/logout">Sign out</a></li> <!-- no # here b/c it's a direct http get -->
+                    </ul>
+                </div>
+                <br/>
+                <br/>
+                <center>
+                    <img src={{profilePic}} alt="Please add a profile picture" width="300px" height="300px" />
+                    <p>{{name}}</p>
+                    <p>{{loc}}</p>
+                </center>
+            </center>
+        </div>
 	</body>
 </html>
