@@ -1,0 +1,26 @@
+<!--DOCTYPE html-->
+<html ng-app="foodApp">
+	<head>
+		<meta charset="utf-8" />
+		<title>FoodForMe</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+		<script src="javascripts/App.js"></script>
+	</head>
+	<body>
+		<div id="feed">
+				<h3>Results:</h3>
+				<div class="result">
+					<table>
+						<tr class="list-group-item" ng-repeat="place in results">
+							<td> <img src={{place.logo}} alt="placeholder" width="100" height="100" /></td>
+							<td>{{ place.location_name }}</td>
+							<td>{{ place.number }}</td>
+							<td> {{ place.address }}  </td>
+						</tr>
+					</table>
+				</div>
+			</div>
+	</body>
+</html>
