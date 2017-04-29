@@ -35,7 +35,7 @@ var app = angular
 				// redirect to login page if not logged in and trying to access a restricted page
 				console.log("changing page");
 				
-				var restrictedPage = ['/login', '/'].indexOf($location.path()) === -1;
+				var restrictedPage = ['/login', '/', '/logout'].indexOf($location.path()) === -1;
 				if (restrictedPage) {
 					$http.get('/user').then(function(success) {
 						if (success.data === "") {

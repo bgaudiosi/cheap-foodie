@@ -160,6 +160,14 @@ app.get('/user',
 		res.send(req.user);
 });
 
+app.get('/logout',
+	function(req, res) {
+		console.log("should be logging out...");
+		req.logout();
+		res.redirect('/');
+	}
+);
+
 
 // Post method for searches
 app.post('/search', function(req, res) {
