@@ -17,6 +17,12 @@ var app = angular
 				templateUrl: 'login.html',
 			})
 			
+			.when('/searchResults',{
+                controller: 'searchController',
+				templateUrl: 'searchResults.html',
+                  
+                  })
+			
 			.when('/profile', {
 				controller: 'profileController',
 				templateUrl: 'profile.html',
