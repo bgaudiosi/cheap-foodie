@@ -85,7 +85,7 @@ passport.use(new Strategy({
 			/* If user in DB, retrieve info */
 			if (current_user.length > 0) {
 	
-				console.log("User found in DB");
+				console.log("User found in DB: \n" + current_user[0]);
 				
 				return cb(err, current_user[0]);
 		
@@ -156,6 +156,7 @@ app.get('/auth/twitter/callback',
 
 app.get('/user', 
 	function(req, res) {
+		console.log('user is: \n' + req.user);
 		res.send(req.user);
 });
 

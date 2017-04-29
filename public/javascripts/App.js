@@ -34,13 +34,19 @@ var app = angular
 			$rootScope.$on('$locationChangeStart', function (event, next, current) {
 				// redirect to login page if not logged in and trying to access a restricted page
 				console.log("changing page");
-				/*
-				var restrictedPage = ['/login'].indexOf($location.path()) === -1;
-				var loggedIn = $rootScope.globals.currentUser;
-				if (restrictedPage && !loggedIn) {
-					console.log("in restricted page");
-					$location.path('/login');
-				}*/
+				
+				var restrictedPage = ['/login', '/'].indexOf($location.path()) === -1;
+				if (restrictedPage) {
+					$http.get('/user').then(function(success) {
+						if (success.data === "") {
+							$location.path('/login');
+						} else {
+							console.log("you are logged in");
+						}
+					}, function(failure) {
+						console.log("ruh roh shaggy");
+					});
+				}
 			});
 		}]);
 
@@ -88,16 +94,18 @@ app.controller("loginController", function($scope, $http, $cookieStore, $locatio
 	
 	/* Not yet implemented */
 	$scope.auth = function() {
-					  
-		$rootScope.globals = {
-			currentUser: {
-			username: username,
-			authdata: authdata
-			}
-		};
-								  
+		$http.get('/auth/twitter').then(function(success) {
+			$rootScope.globals = {
+				currentUser: {
+					username: "soup"
+				}
+			};
+							  
 		$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
 		$cookieStore.put('globals', $rootScope.globals);
+		}, function(failure) {
+			console.log("oops");
+		});
 	};
 }
 	
