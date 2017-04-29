@@ -55,7 +55,15 @@ var restaurant_schema =  new Schema({
     "timezone": String
 });
 
+var user_schema = new Schema({
+	"id": String,
+	"name": String,
+	"profileUrl": String,
+	"location": String
+});
+
 var Restaurant = mongoose.model('Restaurant', restaurant_schema);
+var User = mongoose.model('User', user_schema);
 var mongo = require('mongodb');
 
 var index = require('./routes/index');
@@ -66,13 +74,40 @@ passport.use(new Strategy({
 	consumerSecret: config.twitter_secret,
 	callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
 	},
-	function(token, tokenSecret, profile, cb) {
-		console.log(profile);
-		return cb(null, profile);
-		/*User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-			return cb(err, user);
-		});
-		*/
+	function(token, tokenSecret, profile, cb) {		
+	var userInfo = User.find({ 'id': profile.id_str}, function (err, cur_user) {
+			if (err) return handleError(err);
+		})
+		/* Mongoose find is asynchronous so all the code is surrounded in this block */
+		userInfo.lean().exec(function(err, current_user){
+			if(err)
+				return console.log(err);
+			/* If user in DB, retrieve info */
+			if (current_user.length > 0) {
+	
+				console.log("User found in DB");
+				
+				return cb(err, current_user[0]);
+		
+			/* Otherwise, save user to DB */
+			} else {
+				var this_user = new User({
+					'id': profile.id_str,
+					'name': profile.displayName, 
+					'profileUrl': profile.photos[0].value, 
+					'location': profile.location
+				});
+				console.log("saving " + this_user);
+				this_user.save(function (err, this_user) {
+					if (err) {
+						console.log("Error saving to DB");
+						return console.error(err);
+					}
+					//console.log("Saving " + restaurants[i].name + " to DB.");
+				});
+				return cb(err, this_user);
+			}		
+		})
 	}
 ));
 
@@ -117,6 +152,11 @@ app.get('/auth/twitter/callback',
 	function(req, res) {
 	//Successful authentication, redirect home.
 		res.redirect('/');
+});
+
+app.get('/user', 
+	function(req, res) {
+		res.send(req.user);
 });
 
 
@@ -188,8 +228,10 @@ app.post('/search', function(req, res) {
 		}		
 	});
 });
-app.use('/', index);
 
+
+
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
