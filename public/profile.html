@@ -11,35 +11,37 @@
 		<script src="javascripts/App.js"></script>
 	</head>
 	<body ng-app="foodApp">
-        <div class="info" style="top:100px;" >
-            <div class="content">
-                <center>
-                <div class="nav">
-                    <ul class="nav_bar">
-                        <li class="left"><a href="#/search">Home</a></li>
-                        <li class="left"><a href="#/profile">Profile</a></li>
-                        <li class="right"><a href="/logout">Sign out</a></li> <!-- no # here b/c it's a direct http get -->
-                    </ul>
+		<div class="nav">
+			<ul class="nav_bar">
+				<li class="left"><a href="#/search">Home</a></li>
+				<li class="left"><a href="#/profile">Profile</a></li>
+				<li class="right"><a href="/logout">Sign out</a></li>
+
+			</ul>
+		</div>
+        <div class="banner">
+            <!-- picture from free stock photo site: pexels.com -->
+            <center>
+                <img src={{profilePic}} alt="placeholder_pic" width="200" height="200" />
+                <div class="banner_text">
+                    <h1 class="title" >{{name}}</h1>
                 </div>
-                <br/>
-                <br/>
-                    <img src={{profilePic}} alt="Please add a profile picture" width="300px" height="300px" />
-                    <p>{{name}}</p>
-                    <p>{{loc}}</p>
-                </center>
+            </center>
+        </div>
+        
+        
+
+        <div class="info">
+            <div class="content">
             </div>
         
         
-        
-            <div class="footer">
+           <div class="footer">
                 <p>
                     Made by:        </br>
                     Ben Gaudiosi, Boman Yang, Davy Huang
                 </p>
             </div>
-        
         </div>
-        
-
-	</body>
+    </body>
 </html>
