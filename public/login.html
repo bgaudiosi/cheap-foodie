@@ -3,24 +3,51 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>FoodForMe</title>
+        <link rel="stylesheet" href="Style_1.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 		<script src="javascripts/App.js"></script>
 	</head>
 	<body>
-		<h1>Welcome!</h1>
-		<p>Please authenticate yourself with Twitter before using FoodForMe</p>
-		<!--<form ng-submit="auth()">-->
-		<form action="/auth/twitter">
-			<input class="button" type="submit" value="Login"/>
-		</form>	
+        <div class="nav">
+			<ul class="nav_bar">
+				<li class="left"><a href="#/search">Home</a></li>
+
+			</ul>
+		</div>
+        <div class="banner">
+            <!-- picture from free stock photo site: pexels.com -->
+            <center>
+                <div class="banner_text">
+                    <h1 class="title" >Welcome to FoodForMe!</h1>
+                </div>
+            </center>
+        </div>
         
-        <div class="footer">
+        <div class="info">
+            <div class="content">
+                <center>
+                    <p>Please authenticate yourself with Twitter before using FoodForMe</p>
+                    <!--<form ng-submit="auth()">-->
+                    <form action="/auth/twitter">
+                        <input class="button" type="submit" value="Login"/>
+                    </form>	
+                </center>
+            </div>
+        
+        
+           <div class="footer">
                 <p>
                     Made by:        </br>
                     Ben Gaudiosi, Boman Yang, Davy Huang
                 </p>
+            </div>
         </div>
+    
+	
+		
+        
+
 	</body>
 </html>
