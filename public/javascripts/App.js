@@ -21,14 +21,19 @@ var app = angular
                 controller: 'searchController',
 				templateUrl: 'searchResults.html',
                   
-                  })
+            })
+			
+			.when('/restaurants/:restaurantId', {
+				controller: 'restaurantController',
+				templateUrl: 'restaurants.html',
+			})
 			
 			.when('/profile', {
 				controller: 'profileController',
 				templateUrl: 'profile.html',
 			})
 			
-			.otherwise({ redirectTo: '/' });
+			/*.otherwise({ redirectTo: '/' })*/;
 	}])
 	.run(['$rootScope', '$location', '$cookieStore', '$http',
 		function run($rootScope, $location, $cookieStore, $http) {
@@ -39,7 +44,7 @@ var app = angular
 			}
 			$rootScope.$on('$locationChangeStart', function (event, next, current) {
 				// redirect to login page if not logged in and trying to access a restricted page
-				console.log("changing page");
+				console.log($rootScope);
 				
 				var restrictedPage = ['/login', '/', '/logout'].indexOf($location.path()) === -1;
 				if (restrictedPage) {
@@ -65,9 +70,6 @@ app.controller("searchController", function($scope, $http, $location) {
 	$scope.searchTerm = '';
 	$scope.loc = "";
 	$scope.search = function() {
-		if (!$scope.user) {
-			
-		}
         $scope.results = [];
 		$scope.data = {search: $scope.searchTerm, loc: $scope.loc}
 		$http.post('/search', $scope.data)
@@ -96,23 +98,8 @@ app.controller("searchController", function($scope, $http, $location) {
 
 });
 
-app.controller("loginController", function($scope, $http, $cookieStore, $location) {
-	
-	/* Not yet implemented */
-	$scope.auth = function() {
-		$http.get('/auth/twitter').then(function(success) {
-			$rootScope.globals = {
-				currentUser: {
-					username: "soup"
-				}
-			};
-							  
-		$http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-		$cookieStore.put('globals', $rootScope.globals);
-		}, function(failure) {
-			console.log("oops");
-		});
-	};
+app.controller("restaurantController", function($scope,$routeParams, $http, $cookieStore, $location) {
+	console.log($routeParams.restaurantId);
 }
 	
 );
@@ -123,8 +110,6 @@ app.controller("profileController", function($scope, $http, $cookieStore) {
 	$scope.profilePic = "err";
 	
 	$http.get('/user').then(function(success) {
-		console.log("success!");
-		console.log(success);
 		$scope.name = success.data.name;
 		$scope.loc = success.data.location;
 		$scope.profilePic = success.data.profileUrl;
