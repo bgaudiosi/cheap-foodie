@@ -171,7 +171,7 @@ app.get('/logout',
 
 // Post method for searches
 app.post('/search', function(req, res) {
-	var search_val = req.body.search;
+	var search_val = req.body.search.toLowerCase();
     var location_val = req.body.loc;
     console.log("search val = " + search_val);
 	console.log("location val = " + location_val);
@@ -222,7 +222,8 @@ app.post('/search', function(req, res) {
 		        	res.send(restaurants);
 		        	for (var i = 0; i < restaurants.length; i++) {
 						var curr_restaurant = new Restaurant(restaurants[i])
-        	    		curr_restaurant.save(function (err, curr_restaurant) {
+        	    		console.log(curr_restaurant);
+						curr_restaurant.save(function (err, curr_restaurant) {
                 			if (err) {
                 		   		console.log("Error saving to DB");
                 		    	return console.error(err);
@@ -238,7 +239,15 @@ app.post('/search', function(req, res) {
 	});
 });
 
-
+app.post('/restaurants', 
+	function(req, res) {
+		var restaurantName = req.body.name;
+		Restaurant.find({'name': restaurantName}, function(err, result) {
+			if (err) return err;
+			res.send(result[0]);
+		});
+	}
+);
 
 app.use('/', index);
 
