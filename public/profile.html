@@ -10,9 +10,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 		<script src="javascripts/App.js"></script>
 	</head>
-	<body>
+	<body ng-app="foodApp">
         <div class="info" style="top:100px;" >
-            <center>
+            <div class="content">
+                <center>
                 <div class="nav">
                     <ul class="nav_bar">
                         <li class="left"><a href="#/search">Home</a></li>
@@ -22,12 +23,23 @@
                 </div>
                 <br/>
                 <br/>
-                <center>
                     <img src={{profilePic}} alt="Please add a profile picture" width="300px" height="300px" />
                     <p>{{name}}</p>
                     <p>{{loc}}</p>
                 </center>
-            </center>
+            </div>
+        
+        
+        
+            <div class="footer">
+                <p>
+                    Made by:        </br>
+                    Ben Gaudiosi, Boman Yang, Davy Huang
+                </p>
+            </div>
+        
         </div>
+        
+
 	</body>
 </html>
