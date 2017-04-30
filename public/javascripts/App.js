@@ -98,8 +98,16 @@ app.controller("searchController", function($scope, $http, $location) {
 
 app.controller("restaurantController", function($scope,$routeParams, $http, $cookieStore, $location) {
 	$http.post('/restaurants', {'name':$routeParams.restaurantId}).then(function(success) {
-		var restaurant_data = success.data;
-		// define variables as $scope.VAR_NAME = restaurant_data.X
+		var resta = success.data;
+		$scope.logo = resta.logoUrl;
+		$scope.location_name = resta.name;
+		$scope.number = resta.phone;
+		$scope.address = resta.streetAddress;
+		$scope.city = resta.city;
+		$scope.offersDelivery = resta.offersDelivery;
+		$scope.minFreeDelivery = resta.minFreeDelivery;
+		$scope.url = resta.url;
+		$scope.open = resta.open;
 		
 	}, function(failure) {
 		console.log("error");
