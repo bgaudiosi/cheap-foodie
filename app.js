@@ -241,6 +241,7 @@ app.post('/search', function(req, res) {
 
 app.post('/restaurants', 
 	function(req, res) {
+		console.log("WHAT IS RONK");
 		var restaurantName = req.body.name;
 		Restaurant.find({'name': restaurantName}, function(err, result) {
 			if (err) return err;

@@ -33,7 +33,7 @@ var app = angular
 				templateUrl: 'profile.html',
 			})
 			
-			/*.otherwise({ redirectTo: '/' })*/;
+			.otherwise({ redirectTo: '/' });
 	}])
 	.run(['$rootScope', '$location', '$cookieStore', '$http',
 		function run($rootScope, $location, $cookieStore, $http) {
@@ -43,9 +43,7 @@ var app = angular
 				$http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
 			}
 			$rootScope.$on('$locationChangeStart', function (event, next, current) {
-				// redirect to login page if not logged in and trying to access a restricted page
-				console.log($rootScope);
-				
+				// redirect to login page if not logged in and trying to access a restricted page	
 				var restrictedPage = ['/login', '/', '/logout'].indexOf($location.path()) === -1;
 				if (restrictedPage) {
 					$http.get('/user').then(function(success) {
@@ -99,7 +97,13 @@ app.controller("searchController", function($scope, $http, $location) {
 });
 
 app.controller("restaurantController", function($scope,$routeParams, $http, $cookieStore, $location) {
-	console.log($routeParams.restaurantId);
+	$http.post('/restaurants', {'name':$routeParams.restaurantId}).then(function(success) {
+		var restaurant_data = success.data;
+		// define variables as $scope.VAR_NAME = restaurant_data.X
+		
+	}, function(failure) {
+		console.log("error");
+	});
 }
 	
 );
