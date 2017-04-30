@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FoodForMe</title>
+        <link rel="stylesheet" href="Style_1.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+		<script src="javascripts/App.js"></script>
+	</head>
+	<body ng-app="foodApp">
+		<div class="nav">
+			<ul class="nav_bar">
+				<li class="left"><a href="#/search">Home</a></li>
+				<li class="left"><a href="#/profile">Profile</a></li>
+				<li class="right"><a href="/logout">Sign out</a></li>
+
+			</ul>
+		</div>
+        <div class="banner">
+            <!-- picture from free stock photo site: pexels.com -->
+            <center>
+                <img src={{place.logo}} alt="placeholder" width="200" height="200" />
+                <div class="banner_text">
+                    <h1 class="title" >{{place.location_name}}</h1>
+                </div>
+            </center>
+        </div>
+        
+        
+
+        <div class="info">
+            <p> Location: {{ place.location_name }} </p>
+            <p> Phone: {{ place.number }} </p>
+            <p> Address: {{ place.address }} , {{place.city}}</p>
+            <p> Delivery: {{ place.offersDelivery }} </p>
+            <P> Min free deliver: {{place.minFreeDelivery}}</P>
+            <p> URL: {{ place.url }} </p>
+            <p> Currently Open: {{ place.open }} </p>
+        
+            <footer>
+                <p>
+                    Made by:        </br>
+                    Ben Gaudiosi    </br>
+                    Boman Yang      </br>
+                    Davy Huang
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>
