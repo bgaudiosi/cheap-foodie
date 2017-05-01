@@ -3,7 +3,7 @@
 'use strict';
 
 var app = angular
-	.module('foodApp', ['ngRoute', 'ngCookies'])
+	.module('foodApp', ['ngRoute', 'ngCookies', 'ngMap'])
 	.config(['$routeProvider', '$locationProvider',
 		
 		function ($routeProvider, $locationProvider) {
@@ -96,7 +96,7 @@ app.controller("searchController", function($scope, $http, $location) {
 
 });
 
-app.controller("restaurantController", function($scope,$routeParams, $http, $cookieStore, $location) {
+app.controller("restaurantController", function($scope,$routeParams, $http, $cookieStore, NgMap, $location) {
 	$http.post('/restaurants', {'name':$routeParams.restaurantId}).then(function(success) {
 		var resta = success.data;
 		$scope.logo = resta.logoUrl;
@@ -108,10 +108,16 @@ app.controller("restaurantController", function($scope,$routeParams, $http, $coo
 		$scope.minFreeDelivery = resta.minFreeDelivery;
 		$scope.url = resta.url;
 		$scope.open = resta.open;
-		
+		$scope.lat = resta.latitude;
+		$scope.long = resta.longitude;
+		NgMap.getMap().then(function(map) {
+			console.log(map.getCenter());
+		});	
 	}, function(failure) {
 		console.log("error");
 	});
+	
+
 }
 	
 );
@@ -125,6 +131,7 @@ app.controller("profileController", function($scope, $http, $cookieStore) {
 		$scope.name = success.data.name;
 		$scope.loc = success.data.location;
 		$scope.profilePic = success.data.profileUrl;
+		console.log(success.data);
 	}, function(failure) {
 		console.log(failure);
 	});
