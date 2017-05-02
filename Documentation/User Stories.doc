@@ -1,0 +1,85 @@
+5 user stories
+
+First time user registration:
+Use Facebook as third party authentication
+Option to authenticate with email as well?
+If unable to authenticate, do not proceed
+Login:
+See “First time user registration:” if not registered
+Login with Facebook, go to “Search for food based on price”.
+Account settings
+See “Login:” if not signed in
+User can add allergies to filter out certain kinds of food
+User can specify their address for more accurate location settings
+User can specify location by zip code
+User can see their favorites
+Search for food based on price				
+See “Login:” if not signed in
+Select price search
+Input slider bar for price range
+See “Show search results”: if user clicks “search”
+Search based on specific meal: 				
+See “Login:” if not signed in
+Select meal type search
+User enters food item into search bar
+See “Show search results”: if user clicks “search”
+Search based on ratings: 		
+See “Login:” if not signed in
+Select rating search
+Input threshold: 0 to 5 
+See “Show search results”: if user clicks “search”
+If the user has not logged in, the page goes to “Login”. If the user wants to search based on ratings, then the user can select “rating search” and enter threshold from 0 to 5. After that, user can click “search” button and move to “Show search results” story. 
+“Treat yo self”
+See “Login:” if not signed in
+One button click to search with max price and max ratings
+See “Show search results”: if user clicks “search”
+“I’m broke”
+See “Login:” if not signed in
+One button click to search with minimized price
+See “Show search results”: if user clicks “search”
+Showing the result 
+Search results presented
+Next page option to pull more options
+Reset search, choose between search based on price, rating, food
+See “User finds restaurant they’re interested in” story when choice is made
+User finds restaurant they’re interested in		
+See “Login:” if not signed in
+See “Search based on specific meal/ratings” story
+User clicks on the link and opens up a new page for this restaurant
+Display picture of restaurant (if available), contact information, distance, menu
+Ask for reviews, leave comments
+Recommend similar places??
+See “Showing the result”: if user wants to go back
+
+	
+
+
+
+
+As a logged-in user,I want to search for food options based on price. If I try searching while not logged-in, I will be redirected to the “Login:” story. If logged in, I will be prompted to input a price range and a distance I am willing to travel. Upon confirming my search, results for nearby foods that match the price range and location will then be shown as part of a generic “Show search results:” story.
+
+As a logged-in user,I want to search for specific food around me. If I try searching while not logged-in, I will be redirected to the “Login:” story. If logged in, I will be prompted to input a type of food and a distance I am willing to travel. Upon confirming my search, results for nearby foods that match the price range and location will then be shown as part of a generic “Show search results:” story.
+
+
+Search for food based on price				
+See “Login:” if not signed in
+Select price search
+Input slider bar for price range
+See “Show search results”: if user clicks “search”
+Search based on specific meal: 				
+See “Login:” if not signed in
+Select meal type search
+User enters food item into search bar
+// When selecting distance in miles (or km) show conversion between walking distance and time.
+// EX: A half mile walks is equivalent to a 7 min time investment.
+
+User finds restaurant they’re interested in		
+See “Login:” if not signed in
+See “Search based on specific meal/ratings” story
+User clicks on the link and opens up a new page for this restaurant
+Display picture of restaurant (if available), contact information, distance, menu
+Ask for reviews, leave comments
+Recommend similar places??
+See “Showing the result”: if user wants to go back
+
+After logging in and searching for something, the user may find an item or place that catches their eye. The user can then click on the link and bring them to a new page. This page will display a picture of the restaurant (if available), contact information, distance from the user, and a menu to look at other items offered by this restaurant. While still on the page, the user may decide to call the restaurant and order something. After doing so, they will have the option to leave a review of the restaurant and ‘star’ or ‘like’ the restaurant, saving it to their personal list and giving them easy access if they’d like to order again from here later. At the bottom, similar restaurants will be recommended. 
